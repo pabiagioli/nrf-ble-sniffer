@@ -603,9 +603,12 @@ def sniffer_capture(interface, baudrate, fifo, control_in, control_out):
             fn_ctrl_in = open(control_in, 'rb', 0)
 
         logging.info("Log started at %s", time.strftime("%c"))
-
-        interface, extcap_version = interface.split('-')
+        ifaceTokens = interface.split('-')
+        interface = "-".join(ifaceTokens[:-1])
+        logging.info("interface %s", interface)
+        extcap_version = ifaceTokens[-1]
         logging.info("Extcap version %s", str(extcap_version))
+        
 
         capture_write(Pcap.get_global_header())
         validate_interface(interface, fifo)
